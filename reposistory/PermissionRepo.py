@@ -4,9 +4,9 @@ from model.Permission import Permission
 
 class PermissionRepo(Reposistory):
     @classmethod
-    def getById(cls, id):
-        comment = cls.session.get(Permission, id)
-        return comment
+    def getAll(cls):
+        permissions = cls.session.query(Permission).all()
+        return permissions
     
     @classmethod
     def create(cls, **kwargs):
