@@ -1,0 +1,12 @@
+create a .env file in util folder
+
+copy these into the file
+HOST = "localhost"   
+PORT = "3306"        
+DBUSER = "root"         
+DBNAME = "webdb"
+PASSWORD = "chinh2003"
+JWT_SECRET_KEY = "conchoancut"
+
+EMAIL = "batosrsoft@gmail.com"
+EMAIL_PASSWORD = "secret, ask LQC nhe em"
