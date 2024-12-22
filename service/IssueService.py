@@ -16,6 +16,13 @@ class IssueService():
         return issues
     
     @classmethod
+    def getIssuesByProjectId(cls, project_id):
+        issues = []
+        for item in IssueRepo.getByProjectId(project_id):
+            issues.append(item.as_dict())
+        return issues
+    
+    @classmethod
     def createIssue(cls, **kwargs):
         issue = IssueRepo.create(**kwargs)
         return issue

@@ -13,10 +13,18 @@ def get_issue(issue_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 404
     
-@issue_bp.route('/issues/<sprint_id>', methods=['GET'])
-def get_issues(sprint_id):
+@issue_bp.route('/issues/sprint/<sprint_id>', methods=['GET'])
+def get_issues_by_sprint(sprint_id):
     try:
         issues = IssueService.getIssuesBySprintId(sprint_id)
+        return jsonify(issues)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
+    
+@issue_bp.route('/issues/project/<project_id>', methods=['GET'])
+def get_issues_by_project(project_id):
+    try:
+        issues = IssueService.getIssuesByProjectId(project_id)
         return jsonify(issues)
     except Exception as e:
         return jsonify({"error": str(e)}), 404

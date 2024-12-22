@@ -14,12 +14,16 @@ def get_user_projects(user_id):
 
 @project_bp.route('/project/<id>', methods=['GET'])
 def get_project(id):
-    project = ProjectService.getProjectById(id)
+    try:
+        project = ProjectService.getProjectById(id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 404
     return jsonify(project)
 
 @project_bp.route('/project', methods=['POST'])
 def create_project():
     project_details = request.json
+    print(project_details)
     user_id = project_details.pop('user_id')
     project = ProjectService.createProject(user_id, **project_details)
     ProjectMemberService.addMember(project['project_id'], user_id)

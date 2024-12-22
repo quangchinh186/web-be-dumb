@@ -10,7 +10,7 @@ class SprintRepo(Reposistory):
     
     @classmethod
     def getByProjectId(cls, project_id):
-        sprints = cls.session.query(Sprint).filter(Sprint.project_id == project_id).all()
+        sprints = cls.session.query(Sprint).filter(Sprint.project_id == project_id).order_by(Sprint.start_time.desc()).all()
         return sprints
     
     @classmethod

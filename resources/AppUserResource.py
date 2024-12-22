@@ -54,11 +54,12 @@ def login():
 @auth_bp.route('/register', methods=['POST'])
 def register():
     request_data = request.json
+    print(request_data, 'request_data')
     user_data = {
         'email': request_data['email'],
         'password': request_data['password'],
         'name': request_data['name'],
-        'phone_number': request_data['phone_number']
+        'phone_number': request_data.get('phone_number', '')
     }
     try:
         user_token = AuthService.register(user_data)

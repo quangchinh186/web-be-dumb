@@ -9,11 +9,25 @@ class IssueRepo(Reposistory):
         return issue
     
     @classmethod
+    def getBySprintId(cls, sprint_id):
+        issues = cls.session.execute(select(Issue)
+                                     .filter(Issue.sprint_id == sprint_id)
+                                     .order_by(Issue.created_time.desc())).scalars().all()
+        return issues
+    
+    @classmethod
+    def getByProjectId(cls, project_id):
+        issues = cls.session.execute(select(Issue)
+                                     .filter(Issue.project_id == project_id)
+                                     .order_by(Issue.created_time.desc())).scalars().all()
+        return issues
+    
+    @classmethod
     def create(cls, **kwargs):
         issue = Issue(**kwargs)
         cls.session.add(issue)
         cls.session.commit()
-        return issue.issue_id
+        return issue.as_dict()
     
     @classmethod
     def update(cls, issue: Issue, **kwargs):

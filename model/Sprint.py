@@ -26,6 +26,7 @@ class Sprint(Base):
     created_by: Mapped[int] = mapped_column(ForeignKey("app_users.user_id"))
     project_id: Mapped[int] = mapped_column(ForeignKey('projects.project_id'))
 
-    # def __repr__(self) -> str:
-    #     return f"Message: {self.content} \nBy: {self.user_id} - At: {self.sent_time}"
-    
+    def as_dict(self):
+        sprint = super().as_dict()
+        sprint['status'] = sprint['status'].value
+        return sprint

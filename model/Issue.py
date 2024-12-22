@@ -30,7 +30,7 @@ class Issue(Base):
     
     #foreign key
     created_by: Mapped[int] = mapped_column(ForeignKey("app_users.user_id"))
-    assigned_to: Mapped[int] = mapped_column(ForeignKey("app_users.user_id"))
+    assigned_to: Mapped[Optional[int]] = mapped_column(ForeignKey("app_users.user_id"), nullable=True, server_default=None)
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.project_id"))
     sprint_id: Mapped[Optional[int]] = mapped_column(ForeignKey("sprints.sprint_id"), nullable=True, server_default=None)
 
@@ -41,5 +41,9 @@ class Issue(Base):
     sprint: Mapped[Sprint] = relationship(primaryjoin=Sprint.sprint_id == sprint_id)
 
 
-    # def __repr__(self) -> str:
-    #     return f"{self.user_id}"
+    def as_dict(self):
+        dict_rep = super().as_dict()
+        dict_rep['status'] = self.status.value
+        dict_rep['created_by'] = self.reporter.name
+        
+        return dict_rep
